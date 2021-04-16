@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useRouter } from "next/router";
 import { Container, Box } from "@chakra-ui/react";
 import {
@@ -42,7 +42,7 @@ const Analysis = () => {
   }
 
   return (
-    <Container maxW="container.lg" p="3">
+    <Fragment>
       <StatGroup>
         <Stat>
           <p>{chartData.chart.result[0].meta.symbol}</p>
@@ -64,7 +64,7 @@ const Analysis = () => {
         </Stat>
       </StatGroup>
       <Chart chartData={chartData} />
-    </Container>
+    </Fragment>
   );
 };
 

@@ -9,18 +9,21 @@ import {
   StatArrow,
   StatGroup,
 } from "@chakra-ui/react";
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+
 import Chart from "../../components/Chart";
+import AnalysisTabs from "../../components/AnalysisTabs";
 
 const Analysis = () => {
   const router = useRouter();
   const { ticker } = router.query;
 
-  const [chartData, setChartData] = useState({});
+  const [summaryData, setSummaryData] = useState({});
 
   useEffect(() => {
-    async function fetchRechartData() {
+    async function fetchSummaryData() {
       const res = await fetch(
-        "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-chart?interval=5m&symbol=AMRN&range=1d&region=US",
+        "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary?symbol=AMRN&region=US",
         {
           method: "GET",
           headers: {
@@ -29,42 +32,63 @@ const Analysis = () => {
           },
         }
       );
-      const rechartData = await res.json();
-      setChartData(rechartData);
+      const summary = await res.json();
+      console.log(summary);
+      setSummaryData(summary);
     }
-
-    fetchRechartData();
+    fetchSummaryData();
   }, []);
 
-  if (Object.keys(chartData) == 0) {
-    // not loaded
+  if (Object.keys(summaryData) == 0) {
     return <div>Loading...</div>;
   }
+  console.log(summaryData);
 
   return (
-    <Fragment>
-      <StatGroup>
-        <Stat>
-          <p>{chartData.chart.result[0].meta.symbol}</p>
-          <StatNumber>
-            {chartData.chart.result[0].meta.regularMarketPrice}
-          </StatNumber>
-          <StatHelpText>
-            <StatArrow
-              type={
-                chartData.chart.result[0].meta.regularMarketPrice >
-                chartData.chart.result[0].meta.previousClose
-                  ? "increase"
-                  : "decrease"
-              }
-            ></StatArrow>
-            {chartData.chart.result[0].meta.previousClose /
-              chartData.chart.result[0].meta.regularMarketPrice.toFixed(2)}
-          </StatHelpText>
-        </Stat>
-      </StatGroup>
-      <Chart chartData={chartData} />
-    </Fragment>
+    <Container p="3" maxW="xl">
+      <Box>
+        <StatGroup>
+          <Stat>
+            {summaryData.symbol}
+            <StatNumber>{summaryData.price.regularMarketPrice.fmt}</StatNumber>
+            <StatHelpText>
+              <Box d="flex" alignItems="center">
+                <StatArrow
+                  type={
+                    summaryData.price.regularMarketPrice.fmt >
+                    summaryData.price.regularMarketPreviousClose.fmt
+                      ? "increase"
+                      : "decrease"
+                  }
+                ></StatArrow>
+                {summaryData.price.regularMarketPrice.fmt >
+                summaryData.price.regularMarketPreviousClose.fmt
+                  ? "+"
+                  : "-"}
+                {(
+                  summaryData.price.regularMarketPrice.fmt -
+                  summaryData.price.regularMarketPreviousClose.fmt
+                ).toFixed(2)}
+                {"  ("}
+                {summaryData.price.regularMarketPrice.fmt >
+                summaryData.price.regularMarketPreviousClose.fmt
+                  ? "+"
+                  : "-"}
+                {(
+                  (100 *
+                    (summaryData.price.regularMarketPrice.fmt -
+                      summaryData.price.regularMarketPreviousClose.fmt)) /
+                  summaryData.price.regularMarketPreviousClose.fmt
+                ).toFixed(2)}
+                {"%)"}
+              </Box>
+            </StatHelpText>
+          </Stat>
+        </StatGroup>
+      </Box>
+      <Chart />
+      <AnalysisTabs />
+    </Container>
   );
 };
 

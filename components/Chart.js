@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Container, Stack, Box } from "@chakra-ui/react";
+import { formatResponseForRechart } from "../utils/responseFormatters";
 import {
   LineChart,
   Area,
@@ -10,13 +11,13 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  ReferenceLine,
 } from "recharts";
 
-const handleTimeRangeSelect = (event, timeRangeSet) => {
-  setTimeRange(timeRangeSet);
-};
+function Chart() {
+  const [chartData, setChartData] = useState({});
+  const [rechartData, setRechartData] = useState({});
 
-function Chart({ chartData }) {
   const data = [
     {
       name: "Page A",
@@ -73,37 +74,65 @@ function Chart({ chartData }) {
   ];
   const [timeRange, setTimeRange] = useState(ranges[0]);
 
+  useEffect(() => {
+    async function fetchRechartData() {
+      const res = await fetch(
+        "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-chart?interval=5m&symbol=AMRN&range=1d&region=US",
+        {
+          method: "GET",
+          headers: {
+            "x-rapidapi-key": process.env.YAHOO_FINANCE_KEY,
+            "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
+          },
+        }
+      );
+      const chartData = await res.json();
+      setChartData(formatResponseForRechart(chartData));
+    }
+    fetchRechartData();
+  }, [timeRange]);
+
+  if (Object.keys(chartData) == 0) {
+    // not loaded
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
-      <Box width="500" height="500" bg="red">
-        <ResponsiveContainer>
-          <LineChart
-            width={500}
-            height={300}
-            data={data}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
+      <Box width="100%" mt="3" mb="1">
+        <ResponsiveContainer width="98%" height={400}>
+          <LineChart data={chartData.rechartData} axisLine={false}>
+            <XAxis dataKey="timestamp" interval="preserveStartEnd"></XAxis>
+            <YAxis
+              domain={[chartData.chartLow, chartData.chartHigh]}
+              width={0}
+            />
+            <ReferenceLine
+              y={chartData.rechartData[0].price}
+              stroke="black"
+              strokeDasharray="3 3"
+            />
             <Line
               type="monotone"
-              dataKey="pv"
-              stroke="#8884d8"
-              activeDot={{ r: 8 }}
+              dataKey="close"
+              name="close"
+              stroke={
+                chartData.rechartData[0].close <
+                chartData.rechartData[chartData.rechartData.length - 1].close
+                  ? "green"
+                  : "red"
+              }
+              dot={false}
             />
-            <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+            <Tooltip
+              cursor={{ fill: "rgba(206, 206, 206, 0.2)" }}
+              wrapperStyle={{ color: "pink", background: "green" }}
+              dataKey="close"
+            />
           </LineChart>
         </ResponsiveContainer>
       </Box>
-      <Stack direction="row" spacing={4} align="center">
+      <Stack direction="row" spacing={4} align="center" mt="1" mb="3">
         {ranges.map((rangeSet) => {
           return (
             <Button

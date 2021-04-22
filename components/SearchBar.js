@@ -75,7 +75,7 @@ const SearchBar = () => {
   console.log(searchSuggestions);
 
   const formatOptionLabel = ({ value, label }) => (
-    <Link href={"/analysis/" + value}>
+    <Link key={value} href={"/analysis/" + value}>
       <p style={{ color: "black" }}>{value + " | " + label}</p>
     </Link>
   );

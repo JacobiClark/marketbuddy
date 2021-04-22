@@ -53,7 +53,6 @@ export async function getServerSideProps(context) {
     };
     return quoteData;
   });
-  console.log(tableData);
   if (!tableData) {
     return {
       notFound: true,
@@ -81,7 +80,13 @@ export default function Home({ tableData }) {
           return (
             <Tr>
               <Td>
-                <Link href={"/analysis/" + gainer.symbol} key={gainer.symbol}>
+                <Link
+                  href={{
+                    pathname: "/" + gainer.symbol,
+                    query: { name: gainer.symbol },
+                  }}
+                  key={gainer.symbol}
+                >
                   {gainer.symbol}
                 </Link>
               </Td>

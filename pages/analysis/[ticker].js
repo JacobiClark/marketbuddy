@@ -13,17 +13,21 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 
 import Chart from "../../components/Chart";
 import AnalysisTabs from "../../components/AnalysisTabs";
+import Stats from "../../components/Stats";
+import TextSentiment from "../../components/TextSentiment";
 
 const Analysis = () => {
   const router = useRouter();
   const { ticker } = router.query;
-
+  console.log({ ticker });
   const [summaryData, setSummaryData] = useState({});
 
   useEffect(() => {
     async function fetchSummaryData() {
       const res = await fetch(
-        "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary?symbol=AMRN&region=US",
+        "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary?symbol=" +
+          ticker +
+          "&region=US",
         {
           method: "GET",
           headers: {
@@ -45,48 +49,9 @@ const Analysis = () => {
   console.log(summaryData);
 
   return (
-    <Container p="3" maxW="xl">
-      <Box>
-        <StatGroup>
-          <Stat>
-            {summaryData.symbol}
-            <StatNumber>{summaryData.price.regularMarketPrice.fmt}</StatNumber>
-            <StatHelpText>
-              <Box d="flex" alignItems="center">
-                <StatArrow
-                  type={
-                    summaryData.price.regularMarketPrice.fmt >
-                    summaryData.price.regularMarketPreviousClose.fmt
-                      ? "increase"
-                      : "decrease"
-                  }
-                ></StatArrow>
-                {summaryData.price.regularMarketPrice.fmt >
-                summaryData.price.regularMarketPreviousClose.fmt
-                  ? "+"
-                  : "-"}
-                {(
-                  summaryData.price.regularMarketPrice.fmt -
-                  summaryData.price.regularMarketPreviousClose.fmt
-                ).toFixed(2)}
-                {"  ("}
-                {summaryData.price.regularMarketPrice.fmt >
-                summaryData.price.regularMarketPreviousClose.fmt
-                  ? "+"
-                  : "-"}
-                {(
-                  (100 *
-                    (summaryData.price.regularMarketPrice.fmt -
-                      summaryData.price.regularMarketPreviousClose.fmt)) /
-                  summaryData.price.regularMarketPreviousClose.fmt
-                ).toFixed(2)}
-                {"%)"}
-              </Box>
-            </StatHelpText>
-          </Stat>
-        </StatGroup>
-      </Box>
-      <Chart />
+    <Container p="3" maxW="container.lg">
+      <Stats summaryData={summaryData} />
+      <Chart ticker={ticker} />
       <AnalysisTabs />
     </Container>
   );

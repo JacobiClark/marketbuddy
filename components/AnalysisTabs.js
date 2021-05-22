@@ -1,8 +1,11 @@
+import React from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-
+import TextSentiment from "./TextSentiment";
 const AnalysisTabs = () => {
+  const [tabIndex, setTabIndex] = React.useState(0);
+
   return (
-    <Tabs isLazy>
+    <Tabs isLazy onChange={(index) => setTabIndex(index)}>
       <TabList>
         <Tab>One</Tab>
         <Tab>Two</Tab>
@@ -10,7 +13,7 @@ const AnalysisTabs = () => {
       <TabPanels>
         {/* initially mounted */}
         <TabPanel>
-          <p>one!</p>
+          <TextSentiment />
         </TabPanel>
         {/* initially not mounted */}
         <TabPanel>

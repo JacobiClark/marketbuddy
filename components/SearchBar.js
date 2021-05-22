@@ -1,35 +1,6 @@
-import { SearchIcon } from "@chakra-ui/icons";
-import { Input, InputGroup, InputLeftElement, Stack } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Select, { components } from "react-select";
-
-import {
-  Flex,
-  List,
-  Box,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuIcon,
-  MenuCommand,
-  MenuDivider,
-} from "@chakra-ui/react";
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
-  PopoverCloseButton,
-} from "@chakra-ui/react";
 
 const SearchBar = () => {
   const [userSearchInput, setUserSearchInput] = useState("");

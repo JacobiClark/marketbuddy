@@ -14,54 +14,11 @@ import {
   ReferenceLine,
 } from "recharts";
 
-function Chart() {
+function Chart({ ticker }) {
   const [chartData, setChartData] = useState({});
   const [rechartData, setRechartData] = useState({});
+  console.log(ticker);
 
-  const data = [
-    {
-      name: "Page A",
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: "Page B",
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: "Page C",
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: "Page D",
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: "Page E",
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: "Page F",
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: "Page G",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
   const ranges = [
     { range: "1d", interval: "1m", long: "1 day" },
     { range: "5d", interval: "5m", long: "5 days" },
@@ -72,12 +29,18 @@ function Chart() {
     { range: "2y", interval: "1d", long: "2 years" },
     { range: "5y", interval: "1d", long: "5 years" },
   ];
-  const [timeRange, setTimeRange] = useState(ranges[0]);
+  const [timeRange, setTimeRange] = useState({
+    range: "1d",
+    interval: "5m",
+    long: "1 day",
+  });
 
   useEffect(() => {
     async function fetchRechartData() {
       const res = await fetch(
-        "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-chart?interval=5m&symbol=AMRN&range=1d&region=US",
+        "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-chart?interval=5m&symbol=" +
+          { ticker } +
+          "&range=1d&region=US",
         {
           method: "GET",
           headers: {
@@ -126,13 +89,20 @@ function Chart() {
             />
             <Tooltip
               cursor={{ fill: "rgba(206, 206, 206, 0.2)" }}
-              wrapperStyle={{ color: "pink", background: "green" }}
+              wrapperStyle={{ color: "black", background: "green" }}
               dataKey="close"
             />
           </LineChart>
         </ResponsiveContainer>
       </Box>
-      <Stack direction="row" spacing={4} align="center" mt="1" mb="3">
+      <Stack
+        direction="row"
+        spacing={4}
+        align="center"
+        justify="center"
+        mt="1"
+        mb="3"
+      >
         {ranges.map((rangeSet) => {
           return (
             <Button

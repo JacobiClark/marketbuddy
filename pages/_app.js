@@ -9,7 +9,9 @@ function MyApp({ Component, pageProps }) {
     <ChakraProvider>
       <NavBar />
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <Component {...pageProps} />
+      <Container maxW="contaienr.xl" p="1%">
+        <Component {...pageProps} />
+      </Container>
     </ChakraProvider>
   );
 }

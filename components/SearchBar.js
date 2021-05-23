@@ -56,7 +56,7 @@ const SearchBar = () => {
       value={userSearchInput}
       options={searchSuggestions}
       onInputChange={(searchInput) => setUserSearchInput(searchInput)}
-      placeholder={"Search a ticker"}
+      placeholder={"Search"}
       formatOptionLabel={formatOptionLabel}
       noOptionsMessage={() => ""}
     />

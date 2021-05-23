@@ -7,7 +7,7 @@ const AnalysisTabs = () => {
   return (
     <Tabs isLazy onChange={(index) => setTabIndex(index)}>
       <TabList>
-        <Tab>One</Tab>
+        <Tab>Sentiment</Tab>
         <Tab>Two</Tab>
       </TabList>
       <TabPanels>

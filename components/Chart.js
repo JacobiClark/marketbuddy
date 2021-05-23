@@ -17,7 +17,6 @@ import {
 function Chart({ ticker }) {
   const [chartData, setChartData] = useState({});
   const [rechartData, setRechartData] = useState({});
-  console.log(ticker);
 
   const ranges = [
     { range: "1d", interval: "1m", long: "1 day" },
@@ -34,13 +33,18 @@ function Chart({ ticker }) {
     interval: "5m",
     long: "1 day",
   });
+  console.log(timeRange.range);
 
   useEffect(() => {
     async function fetchRechartData() {
       const res = await fetch(
-        "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-chart?interval=5m&symbol=" +
-          { ticker } +
-          "&range=1d&region=US",
+        "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-chart?interval=" +
+          timeRange.interval +
+          "&symbol=" +
+          ticker +
+          "&range=" +
+          timeRange.range +
+          "&region=US",
         {
           method: "GET",
           headers: {
@@ -63,7 +67,7 @@ function Chart({ ticker }) {
   return (
     <div>
       <Box width="100%" mt="3" mb="1">
-        <ResponsiveContainer width="98%" height={400}>
+        <ResponsiveContainer width="100%" height={400}>
           <LineChart data={chartData.rechartData} axisLine={false}>
             <XAxis dataKey="timestamp" interval="preserveStartEnd"></XAxis>
             <YAxis
@@ -97,7 +101,7 @@ function Chart({ ticker }) {
       </Box>
       <Stack
         direction="row"
-        spacing={4}
+        spacing={3}
         align="center"
         justify="center"
         mt="1"
@@ -106,6 +110,7 @@ function Chart({ ticker }) {
         {ranges.map((rangeSet) => {
           return (
             <Button
+              size="sm"
               value={rangeSet}
               variant="solid"
               onClick={() => setTimeRange(rangeSet)}

@@ -19,7 +19,6 @@ import TextSentiment from "../../components/TextSentiment";
 const Analysis = () => {
   const router = useRouter();
   const { ticker } = router.query;
-  console.log({ ticker });
   const [summaryData, setSummaryData] = useState({});
 
   useEffect(() => {
@@ -44,12 +43,13 @@ const Analysis = () => {
   }, []);
 
   if (Object.keys(summaryData) == 0) {
+    console.log("nf");
     return <div>Loading...</div>;
   }
   console.log(summaryData);
 
   return (
-    <Container p="3" maxW="container.lg">
+    <Container p="0" m="0" maxW="container.lg">
       <Stats summaryData={summaryData} />
       <Chart ticker={ticker} />
       <AnalysisTabs />

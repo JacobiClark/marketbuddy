@@ -1,4 +1,4 @@
-import { findLineByLeastSquares, calculateSMA } from "./Helpers";
+/*import { findLineByLeastSquares, calculateSMA } from "./Helpers";
 
 export const formatResponseForRechart = (responseData) => {
   const timestamps = responseData.chart.result[0].timestamp.map((timestamp) =>
@@ -30,4 +30,4 @@ export const formatResponseForRechart = (responseData) => {
     chartHigh,
     chartLow,
   };
-};
+};*/

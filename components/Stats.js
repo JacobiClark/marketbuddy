@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box } from "@chakra-ui/react";
 import {
   Stat,
@@ -8,7 +8,37 @@ import {
   StatGroup,
 } from "@chakra-ui/react";
 
-const Stats = ({ summaryData }) => {
+const Stats = ({ ticker }) => {
+  const [summaryData, setSummaryData] = useState({});
+
+  useEffect(() => {
+    async function fetchSummaryData() {
+      try {
+        const res = await fetch(
+          "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary?symbol=" +
+            ticker +
+            "&region=US",
+          {
+            method: "GET",
+            headers: {
+              "x-rapidapi-key": process.env.YAHOO_FINANCE_KEY,
+              "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
+            },
+          }
+        );
+        const summary = await res.json();
+        setSummaryData(summary);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchSummaryData();
+  }, [ticker]);
+
+  if (Object.keys(summaryData) == 0) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Box>
       <StatGroup>

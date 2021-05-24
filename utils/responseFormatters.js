@@ -13,7 +13,6 @@ export const formatResponseForRechart = (responseData) => {
       return dataPoint;
     })
     .filter((dataPoint) => dataPoint.close > 0);
-  console.log(rechartData);
   const chartHigh = Math.max.apply(
     Math,
     rechartData.map((dataPoint) => dataPoint.close)

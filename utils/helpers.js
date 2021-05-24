@@ -36,14 +36,12 @@ export const findLineByLeastSquares = (xVals, yVals) => {
   const rSquared =
     1 -
     (totalSquaredErrorFromLine / totalSquaredErrorFromMeansOfyVals).toFixed(5);
-  console.log({ linearRegressionLine, rSquared });
   return { linearRegressionLine, rSquared };
 };
 
 export const calculateSMA = (dataArray, window) => {
   const SMAvalues = [];
-  console.log(dataArray);
-  console.log(window);
+
   let roundedWindow = Math.floor(window);
   if (roundedWindow % 2 === 0) {
     roundedWindow = roundedWindow - 1;

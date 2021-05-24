@@ -1,7 +1,7 @@
 import React from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import TextSentiment from "./TextSentiment";
-const AnalysisTabs = () => {
+const AnalysisTabs = ({ ticker }) => {
   const [tabIndex, setTabIndex] = React.useState(0);
 
   return (
@@ -13,7 +13,7 @@ const AnalysisTabs = () => {
       <TabPanels>
         {/* initially mounted */}
         <TabPanel>
-          <TextSentiment />
+          <TextSentiment ticker={ticker} />
         </TabPanel>
         {/* initially not mounted */}
         <TabPanel>

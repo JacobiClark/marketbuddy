@@ -33,31 +33,34 @@ function Chart({ ticker }) {
     interval: "5m",
     long: "1 day",
   });
-  console.log(timeRange.range);
 
   useEffect(() => {
     async function fetchRechartData() {
-      const res = await fetch(
-        "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-chart?interval=" +
-          timeRange.interval +
-          "&symbol=" +
-          ticker +
-          "&range=" +
-          timeRange.range +
-          "&region=US",
-        {
-          method: "GET",
-          headers: {
-            "x-rapidapi-key": process.env.YAHOO_FINANCE_KEY,
-            "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
-          },
-        }
-      );
-      const chartData = await res.json();
-      setChartData(formatResponseForRechart(chartData));
+      try {
+        const res = await fetch(
+          "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-chart?interval=" +
+            timeRange.interval +
+            "&symbol=" +
+            ticker +
+            "&range=" +
+            timeRange.range +
+            "&region=US",
+          {
+            method: "GET",
+            headers: {
+              "x-rapidapi-key": process.env.YAHOO_FINANCE_KEY,
+              "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
+            },
+          }
+        );
+        const chartData = await res.json();
+        setChartData(formatResponseForRechart(chartData));
+      } catch (error) {
+        console.error(error);
+      }
     }
     fetchRechartData();
-  }, [timeRange]);
+  }, [ticker, timeRange]);
 
   if (Object.keys(chartData) == 0) {
     // not loaded

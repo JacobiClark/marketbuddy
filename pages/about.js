@@ -7,7 +7,6 @@ export default function about() {
 
   useEffect(() => {
     const searchSuggestions = async (searchInput) => {
-      console.log("api called");
       const searchSuggestions = await fetch(
         "https://apidojo-yahoo-finance-v1.p.rapidapi.com/auto-complete?q=" +
           searchInput +
@@ -40,7 +39,6 @@ export default function about() {
     }, 1000);
     return () => clearTimeout(timer);
   }, [userSearchInput]);
-  console.log(searchSuggestions);
 
   return (
     <Select

@@ -8,7 +8,6 @@ const SearchBar = () => {
 
   useEffect(() => {
     const searchSuggestions = async (searchInput) => {
-      console.log("api called");
       const searchSuggestions = await fetch(
         "https://apidojo-yahoo-finance-v1.p.rapidapi.com/auto-complete?q=" +
           searchInput +
@@ -43,7 +42,6 @@ const SearchBar = () => {
     }, 1000);
     return () => clearTimeout(timer);
   }, [userSearchInput]);
-  console.log(searchSuggestions);
 
   const formatOptionLabel = ({ value, label }) => (
     <Link key={value} href={"/analysis/" + value}>

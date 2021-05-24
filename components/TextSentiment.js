@@ -18,14 +18,26 @@ import {
 } from "@chakra-ui/react";
 import { analyzeSentiment } from "../pages/api/sentimentAnalysis";
 
-const TextSentiment = () => {
+const getScoreColor = (score) => {
+  if (score > 0.7) {
+    return "green";
+  }
+  if (score < 0.3) {
+    return "red";
+  }
+  return "yellow";
+};
+
+const TextSentiment = ({ ticker }) => {
   const [newsData, setNewsData] = useState({});
   const [newsSentiment, setNewsSentiment] = useState([]);
 
   useEffect(() => {
     async function fetchNewsData() {
       const res = await fetch(
-        "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/get-news?category=GME&region=US",
+        "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/get-news?category=" +
+          ticker +
+          "&region=US",
         {
           method: "GET",
           headers: {
@@ -43,12 +55,11 @@ const TextSentiment = () => {
           return analyzeSentiment(article.content);
         })
       );
-      console.log(newsDataSentimentScores);
       setNewsData(filteredNewsData);
       setNewsSentiment(newsDataSentimentScores);
     }
     fetchNewsData();
-  }, []);
+  }, [ticker]);
 
   if (Object.keys(newsData) == 0) {
     // not loaded
@@ -85,7 +96,11 @@ const TextSentiment = () => {
                   </AccordionItem>
                 </Accordion>
               </Td>
-              <Td>{newsSentiment.length != 0 ? newsSentiment[index] : 0}</Td>
+              <Td color={getScoreColor(newsSentiment[index])}>
+                {newsSentiment.length != 0
+                  ? newsSentiment[index].toFixed(5)
+                  : 0}
+              </Td>
             </Tr>
           );
         })}

@@ -13,9 +13,12 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
+import { useRouter } from "next/router";
 
-function Chart({ ticker }) {
-  const [chartData, setChartData] = useState({});
+function Chart() {
+  const router = useRouter();
+  const { ticker } = router.query;
+  const [chartData, setChartData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const ranges = [
@@ -35,36 +38,34 @@ function Chart({ ticker }) {
   });
 
   useEffect(() => {
-    async function fetchRechartData() {
-      try {
-        console.log("chart");
-        const res = await fetch(
-          "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-chart?interval=" +
-            timeRange.interval +
-            "&symbol=" +
-            ticker +
-            "&range=" +
-            timeRange.range +
-            "&region=US",
-          {
-            method: "GET",
-            headers: {
-              "x-rapidapi-key": process.env.YAHOO_FINANCE_KEY,
-              "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
-            },
-          }
-        );
-        const chartData = await res.json();
-        setChartData(formatResponseForRechart(chartData));
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
+    console.log(ticker);
+    fetch(
+      "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-chart?interval=" +
+        timeRange.interval +
+        "&symbol=" +
+        ticker +
+        "&range=" +
+        timeRange.range +
+        "&region=US",
+      {
+        method: "GET",
+        headers: {
+          "x-rapidapi-key": process.env.YAHOO_FINANCE_KEY,
+          "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
+        },
       }
-    }
-    fetchRechartData();
-  }, [ticker, timeRange]);
+    )
+      .then((data) => data.json())
+      .then((data) => {
+        setChartData(formatResponseForRechart(data));
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [timeRange]);
 
-  if (isLoading) {
+  if (!chartData) {
     return <div>Loading...</div>;
   }
 

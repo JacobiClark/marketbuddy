@@ -10,6 +10,7 @@ import {
 
 const Stats = ({ ticker }) => {
   const [summaryData, setSummaryData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchSummaryData() {
@@ -28,14 +29,15 @@ const Stats = ({ ticker }) => {
         );
         const summary = await res.json();
         setSummaryData(summary);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
     }
     fetchSummaryData();
-  }, [ticker]);
+  }, []);
 
-  if (Object.keys(summaryData) == 0) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 

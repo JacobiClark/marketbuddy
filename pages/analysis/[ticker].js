@@ -6,10 +6,14 @@ import Chart from "../../components/Chart";
 import AnalysisTabs from "../../components/AnalysisTabs";
 import Stats from "../../components/Stats";
 
-const Analysis = () => {
-  const router = useRouter();
-  const { ticker } = router.query;
+export const getServerSideProps = async (context) => {
+  const ticker = context.params.ticker;
+  return {
+    props: { ticker: ticker },
+  };
+};
 
+const Analysis = ({ ticker }) => {
   return (
     <Box>
       <Stats ticker={ticker} />

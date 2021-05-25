@@ -61,7 +61,7 @@ const TextSentiment = ({ ticker }) => {
       setIsloading(false);
     }
     fetchNewsData();
-  }, [ticker]);
+  }, []);
 
   if (isLoading) {
     return <div>Loading...</div>;

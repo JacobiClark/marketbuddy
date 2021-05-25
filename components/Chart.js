@@ -16,7 +16,7 @@ import {
 
 function Chart({ ticker }) {
   const [chartData, setChartData] = useState({});
-  const [rechartData, setRechartData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   const ranges = [
     { range: "1d", interval: "1m", long: "1 day" },
@@ -37,6 +37,7 @@ function Chart({ ticker }) {
   useEffect(() => {
     async function fetchRechartData() {
       try {
+        console.log("chart");
         const res = await fetch(
           "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-chart?interval=" +
             timeRange.interval +
@@ -55,6 +56,7 @@ function Chart({ ticker }) {
         );
         const chartData = await res.json();
         setChartData(formatResponseForRechart(chartData));
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -62,8 +64,7 @@ function Chart({ ticker }) {
     fetchRechartData();
   }, [ticker, timeRange]);
 
-  if (Object.keys(chartData) == 0) {
-    // not loaded
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 

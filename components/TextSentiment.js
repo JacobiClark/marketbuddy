@@ -31,6 +31,7 @@ const getScoreColor = (score) => {
 const TextSentiment = ({ ticker }) => {
   const [newsData, setNewsData] = useState({});
   const [newsSentiment, setNewsSentiment] = useState([]);
+  const [isLoading, setIsloading] = useState(true);
 
   useEffect(() => {
     async function fetchNewsData() {
@@ -57,12 +58,12 @@ const TextSentiment = ({ ticker }) => {
       );
       setNewsData(filteredNewsData);
       setNewsSentiment(newsDataSentimentScores);
+      setIsloading(false);
     }
     fetchNewsData();
   }, [ticker]);
 
-  if (Object.keys(newsData) == 0) {
-    // not loaded
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 

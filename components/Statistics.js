@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Spinner } from "@chakra-ui/react";
 import StatBox from "./StatBox";
 
 const Statistics = ({ ticker }) => {
@@ -31,18 +31,22 @@ const Statistics = ({ ticker }) => {
   }, [ticker]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Box align="center">
+        <Spinner />
+      </Box>
+    );
   }
 
   return (
     <Flex wrap="wrap" alignItems="center" justifyContent="space-between">
       <StatBox
         statType="Market Cap"
-        statValue={statisticsData.summaryDetail.marketCap.fmt}
+        statValue={statisticsData?.summaryDetail?.MarketCap?.fmt ?? "--"}
       />
       <StatBox
         statType="PE Ratio"
-        statValue={statisticsData.summaryDetail.trailingPE.fmt}
+        statValue={statisticsData?.summaryDetail?.trailingPE?.fmt ?? "--"}
       />
     </Flex>
   );

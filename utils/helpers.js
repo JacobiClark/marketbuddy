@@ -67,3 +67,13 @@ export const calculateSMA = (dataArray, window) => {
   }
   return SMAvalues;
 };
+
+export const getPercentDifference = (startPrice, currPrice) => {
+  const percentDifference = Math.round(
+    ((currPrice - startPrice) / startPrice) * 100
+  );
+
+  return percentDifference > 0
+    ? "+" + percentDifference + "%"
+    : percentDifference + "%";
+};

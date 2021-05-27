@@ -1,9 +1,13 @@
 import Head from "next/head";
 import NavBar from "../components/Layout/NavBar";
 import { VStack, Container } from "@chakra-ui/react";
-import Link from "next/link";
+import { Link } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { getPercentDifference } from "../utils/helpers";
 import {
+  Wrap,
+  Box,
+  Text,
   Table,
   Thead,
   Tbody,
@@ -66,36 +70,124 @@ export async function getServerSideProps(context) {
 
 export default function Home({ tableData }) {
   return (
-    <Table variant="simple">
-      <TableCaption placement="top">Top Daily Gainers</TableCaption>
-      <Thead>
-        <Tr>
-          <Th>Symbol</Th>
-          <Th>Previous Close</Th>
-          <Th>Price</Th>
-        </Tr>
-      </Thead>
-      <Tbody>
-        {tableData.slice(0, 5).map((gainer) => {
-          return (
-            <Tr>
-              <Td>
-                <Link
-                  href={{
-                    pathname: "/" + gainer.symbol,
-                    query: { name: gainer.symbol },
-                  }}
-                  key={gainer.symbol}
-                >
-                  {gainer.symbol}
-                </Link>
-              </Td>
-              <Td>{gainer.previousClose}</Td>
-              <Td>{gainer.price}</Td>
-            </Tr>
-          );
-        })}
-      </Tbody>
-    </Table>
+    <Wrap spacing="30px" justify="center" alignContent="center">
+      <Table
+        variant="simple"
+        width={[
+          "100%", // base
+          "40%", // 480px upwards
+        ]}
+      >
+        <TableCaption placement="top">Top Daily Gainers</TableCaption>
+        <Thead>
+          <Tr>
+            <Th>Symbol</Th>
+            <Th>Previous Close</Th>
+            <Th>Current Price</Th>
+            <Th>Change</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {tableData.slice(0, 6).map((gainer) => {
+            return (
+              <Tr>
+                <Td>
+                  <Link
+                    color="#4FBCFF"
+                    key={gainer.symbol}
+                    href={"/analysis/" + gainer.symbol}
+                  >
+                    {gainer.symbol}
+                  </Link>
+                </Td>
+                <Td>{gainer.previousClose}</Td>
+                <Td>{gainer.price}</Td>
+                <Td>
+                  {getPercentDifference(gainer.previousClose, gainer.price)}
+                </Td>
+              </Tr>
+            );
+          })}
+        </Tbody>
+      </Table>
+      <Table
+        variant="simple"
+        width={[
+          "100%", // base
+          "40%", // 480px upwards
+        ]}
+      >
+        <TableCaption placement="top">Top Daily Losers</TableCaption>
+        <Thead>
+          <Tr>
+            <Th>Symbol</Th>
+            <Th>Previous Close</Th>
+            <Th>Current Price</Th>
+            <Th>Change</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {tableData.slice(6, 12).map((loser) => {
+            return (
+              <Tr>
+                <Td>
+                  <Link
+                    color="#4FBCFF"
+                    key={loser.symbol}
+                    href={"/analysis/" + loser.symbol}
+                  >
+                    {loser.symbol}
+                  </Link>
+                </Td>
+                <Td>{loser.previousClose}</Td>
+                <Td>{loser.price}</Td>
+                <Td>
+                  {getPercentDifference(loser.previousClose, loser.price)}
+                </Td>
+              </Tr>
+            );
+          })}
+        </Tbody>
+      </Table>
+      <Table
+        variant="simple"
+        width={[
+          "100%", // base
+          "40%", // 480px upwards
+        ]}
+      >
+        <TableCaption placement="top">Most Active</TableCaption>
+        <Thead>
+          <Tr>
+            <Th>Symbol</Th>
+            <Th>Previous Close</Th>
+            <Th>Current Price</Th>
+            <Th>Change</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {tableData.slice(12, 18).map((active) => {
+            return (
+              <Tr>
+                <Td>
+                  <Link
+                    color="#4FBCFF"
+                    key={active.symbol}
+                    href={"/analysis/" + active.symbol}
+                  >
+                    {active.symbol}
+                  </Link>
+                </Td>
+                <Td>{active.previousClose}</Td>
+                <Td>{active.price}</Td>
+                <Td>
+                  {getPercentDifference(active.previousClose, active.price)}
+                </Td>
+              </Tr>
+            );
+          })}
+        </Tbody>
+      </Table>
+    </Wrap>
   );
 }

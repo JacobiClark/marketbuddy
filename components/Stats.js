@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Spinner } from "@chakra-ui/react";
 import {
   Stat,
   StatNumber,
@@ -38,7 +38,11 @@ const Stats = ({ ticker }) => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Box align="center">
+        <Spinner />
+      </Box>
+    );
   }
 
   return (

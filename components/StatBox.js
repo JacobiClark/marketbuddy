@@ -5,7 +5,7 @@ const StatBox = ({ statType, statValue }) => {
     <Box
       p="4"
       width={{
-        base: "33%", // 0-48em
+        base: "50%", // 0-48em
         md: "25%", // 48em-80em,
         xl: "20%", // 80em+
       }}

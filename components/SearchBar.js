@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import Select, { components } from "react-select";
+import { Link } from "@chakra-ui/react";
 
 const SearchBar = () => {
   const [userSearchInput, setUserSearchInput] = useState("");
@@ -39,7 +39,7 @@ const SearchBar = () => {
       if (userSearchInput !== "") {
         searchSuggestions(userSearchInput);
       }
-    }, 1000);
+    }, 500);
     return () => clearTimeout(timer);
   }, [userSearchInput]);
 

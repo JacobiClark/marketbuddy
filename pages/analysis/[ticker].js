@@ -1,6 +1,5 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { useRouter } from "next/router";
-import { Container, Box } from "@chakra-ui/react";
+import React from "react";
+import { Box } from "@chakra-ui/react";
 
 import Chart from "../../components/Chart";
 import AnalysisTabs from "../../components/AnalysisTabs";

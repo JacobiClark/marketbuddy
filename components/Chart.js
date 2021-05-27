@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Container, Stack, Box } from "@chakra-ui/react";
+import { Button, Container, Stack, Box, Spinner } from "@chakra-ui/react";
 import { formatResponseForRechart } from "../utils/responseFormatters";
 import {
   LineChart,
@@ -13,11 +13,8 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
-import { useRouter } from "next/router";
 
-function Chart() {
-  const router = useRouter();
-  const { ticker } = router.query;
+function Chart({ ticker }) {
   const [chartData, setChartData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -66,8 +63,13 @@ function Chart() {
   }, [timeRange]);
 
   if (!chartData) {
-    return <div>Loading...</div>;
+    return (
+      <Box align="center">
+        <Spinner />
+      </Box>
+    );
   }
+  console.log(chartData);
 
   return (
     <div>
@@ -76,7 +78,7 @@ function Chart() {
           <LineChart data={chartData.rechartData} axisLine={false}>
             <XAxis dataKey="timestamp" interval="preserveStartEnd"></XAxis>
             <YAxis
-              domain={[chartData.chartLow, chartData.chartHigh]}
+              domain={[chartData.chartLow * 0.98, chartData.chartHigh * 1.02]}
               width={0}
             />
             <ReferenceLine

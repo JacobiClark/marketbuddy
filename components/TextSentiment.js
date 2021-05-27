@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Sentiment from "sentiment";
 import {
+  Spinner,
   Box,
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
@@ -57,14 +57,19 @@ const TextSentiment = ({ ticker }) => {
         })
       );
       setNewsData(filteredNewsData);
-      setNewsSentiment(newsDataSentimentScores);
+
       setIsloading(false);
+      setNewsSentiment(newsDataSentimentScores);
     }
     fetchNewsData();
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Box align="center">
+        <Spinner />
+      </Box>
+    );
   }
 
   return (

@@ -1,25 +1,42 @@
 export const formatResponseForRechart = (responseData) => {
-  const timestamps = responseData.chart.result[0].timestamp.map((timestamp) =>
-    new Date(timestamp * 1000).toString().substr(0, 15)
-  );
+  console.log(responseData);
+  const timestamps = responseData.chart.result[0].timestamp.map((timestamp) => {
+    if (responseData.chart.result[0].meta.range == "1d") {
+      return (
+        new Date(timestamp * 1000)
+          .toLocaleString("en-US", { timeZone: "America/New_York" })
+          .toString()
+          .substr(11, 12) + "\n"
+      );
+    }
+    return null;
+  });
   const rechartData = timestamps
     .map((quote, index) => {
       let dataPoint = {
         timestamp: timestamps[index],
-        low: responseData.chart.result[0].indicators.quote[0].low[index],
-        high: responseData.chart.result[0].indicators.quote[0].high[index],
-        close: responseData.chart.result[0].indicators.quote[0].close[index],
+        low: responseData.chart.result[0].indicators.quote[0].low[
+          index
+        ].toFixed(2),
+        high: responseData.chart.result[0].indicators.quote[0].high[
+          index
+        ].toFixed(2),
+        close: responseData.chart.result[0].indicators.quote[0].close[
+          index
+        ].toFixed(2),
       };
       return dataPoint;
     })
     .filter((dataPoint) => dataPoint.close > 0);
   const chartHigh = Math.max.apply(
     Math,
-    rechartData.map((dataPoint) => dataPoint.close)
+    rechartData.map((dataPoint) => Math.ceil(parseFloat(dataPoint.close) * 1.1))
   );
   const chartLow = Math.min.apply(
     Math,
-    rechartData.map((dataPoint) => dataPoint.close)
+    rechartData.map((dataPoint) =>
+      Math.floor(parseFloat(dataPoint.close) * 0.9)
+    )
   );
 
   return {

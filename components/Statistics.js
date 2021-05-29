@@ -42,11 +42,11 @@ const Statistics = ({ ticker }) => {
     <Flex wrap="wrap" alignItems="center" justifyContent="space-between">
       <StatBox
         statType="Market Cap"
-        statValue={statisticsData?.summaryDetail?.MarketCap?.fmt ?? "--"}
+        statValue={statisticsData.summaryDetail.marketCap.fmt}
       />
       <StatBox
         statType="PE Ratio"
-        statValue={statisticsData?.summaryDetail?.trailingPE?.fmt ?? "--"}
+        statValue={statisticsData.summaryDetail.trailingPE.fmt}
       />
     </Flex>
   );

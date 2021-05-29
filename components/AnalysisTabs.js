@@ -8,16 +8,16 @@ const AnalysisTabs = ({ ticker }) => {
   return (
     <Tabs isLazy onChange={(index) => setTabIndex(index)}>
       <TabList>
-        <Tab>Statistics</Tab>
         <Tab>Sentiment</Tab>
+        <Tab>Financials</Tab>
       </TabList>
       <TabPanels>
         <TabPanel>
-          <Statistics ticker={ticker} />
+          <TextSentiment ticker={ticker} />
         </TabPanel>
         {/* initially not mounted */}
         <TabPanel>
-          <TextSentiment ticker={ticker} />
+          <Statistics ticker={ticker} />
         </TabPanel>
       </TabPanels>
     </Tabs>

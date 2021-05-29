@@ -16,7 +16,6 @@ import {
 
 function Chart({ ticker }) {
   const [chartData, setChartData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   const ranges = [
     { range: "1d", interval: "1m", long: "1 day" },
@@ -55,7 +54,6 @@ function Chart({ ticker }) {
       .then((data) => data.json())
       .then((data) => {
         setChartData(formatResponseForRechart(data));
-        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -73,13 +71,18 @@ function Chart({ ticker }) {
 
   return (
     <div>
-      <Box width="100%" mt="3" mb="1">
-        <ResponsiveContainer width="100%" height={400}>
-          <LineChart data={chartData.rechartData} axisLine={false}>
-            <XAxis dataKey="timestamp" interval="preserveStartEnd"></XAxis>
+      <Box mt="3" mb="1">
+        <ResponsiveContainer width="95%" height={400}>
+          <LineChart
+            data={chartData.rechartData}
+            axisLine={false}
+            margin={{ right: 8 }}
+          >
+            <XAxis dataKey="timestamp" tick={false}></XAxis>
             <YAxis
-              domain={[chartData.chartLow * 0.98, chartData.chartHigh * 1.02]}
-              width={0}
+              width={45}
+              domain={[chartData.chartLow, chartData.chartHigh]}
+              dx={-5}
             />
             <ReferenceLine
               y={chartData.rechartData[0].price}
@@ -99,8 +102,8 @@ function Chart({ ticker }) {
               dot={false}
             />
             <Tooltip
-              cursor={{ fill: "rgba(206, 206, 206, 0.2)" }}
-              wrapperStyle={{ color: "black", background: "green" }}
+              cursor={false}
+              wrapperStyle={{ color: "black" }}
               dataKey="close"
             />
           </LineChart>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Sentiment from "sentiment";
+
 import {
   Spinner,
   Box,
@@ -53,13 +53,12 @@ const TextSentiment = ({ ticker }) => {
       );
       const newsDataSentimentScores = await Promise.all(
         filteredNewsData.map(async (article) => {
-          return analyzeSentiment(article.content);
+          return analyzeSentiment(article);
         })
       );
       setNewsData(filteredNewsData);
-
-      setIsloading(false);
       setNewsSentiment(newsDataSentimentScores);
+      setIsloading(false);
     }
     fetchNewsData();
   }, []);
@@ -74,7 +73,6 @@ const TextSentiment = ({ ticker }) => {
 
   return (
     <Table variant="unstlyed">
-      <TableCaption>Imperial to metric conversion factors</TableCaption>
       <Thead>
         <Tr>
           <Th style={{ textAlign: "center" }}>Article</Th>

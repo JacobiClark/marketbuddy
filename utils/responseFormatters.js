@@ -1,13 +1,10 @@
 export const formatResponseForRechart = (responseData) => {
-  console.log(responseData);
   const timestamps = responseData.chart.result[0].timestamp.map((timestamp) => {
     if (responseData.chart.result[0].meta.range == "1d") {
-      return (
-        new Date(timestamp * 1000)
-          .toLocaleString("en-US", { timeZone: "America/New_York" })
-          .toString()
-          .substr(11, 12) + "\n"
-      );
+      return new Date(timestamp * 1000)
+        .toLocaleString("en-US", { timeZone: "America/New_York" })
+        .toString()
+        .substr(11, 12);
     }
     return null;
   });
@@ -30,13 +27,11 @@ export const formatResponseForRechart = (responseData) => {
     .filter((dataPoint) => dataPoint.close > 0);
   const chartHigh = Math.max.apply(
     Math,
-    rechartData.map((dataPoint) => Math.ceil(parseFloat(dataPoint.close) * 1.1))
+    rechartData.map((dataPoint) => Math.ceil(parseFloat(dataPoint.close)))
   );
   const chartLow = Math.min.apply(
     Math,
-    rechartData.map((dataPoint) =>
-      Math.floor(parseFloat(dataPoint.close) * 0.9)
-    )
+    rechartData.map((dataPoint) => Math.floor(parseFloat(dataPoint.close)))
   );
 
   return {

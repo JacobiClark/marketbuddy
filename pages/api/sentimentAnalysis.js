@@ -64,9 +64,11 @@ const predict = async (text, model, metadata) => {
   return score;
 };
 
-export const analyzeSentiment = async (text) => {
+export const analyzeSentiment = async (article) => {
   const model = await getModel();
   const tfjsMetaData = await getGoogletfjsMetaData();
-  const score = await predict(text, model, tfjsMetaData);
-  return score;
+  const titleScore = await predict(article.title, model, tfjsMetaData);
+  const contentScore = await predict(article.content, model, tfjsMetaData);
+
+  return (titleScore * 3 + contentScore) / 4;
 };

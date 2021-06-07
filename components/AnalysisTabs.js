@@ -6,7 +6,7 @@ const AnalysisTabs = ({ ticker }) => {
   const [tabIndex, setTabIndex] = React.useState(0);
 
   return (
-    <Tabs isLazy onChange={(index) => setTabIndex(index)}>
+    <Tabs align="center" isLazy onChange={(index) => setTabIndex(index)}>
       <TabList>
         <Tab>Sentiment</Tab>
         <Tab>Financials</Tab>

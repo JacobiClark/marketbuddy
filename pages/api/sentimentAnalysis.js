@@ -70,5 +70,5 @@ export const analyzeSentiment = async (article) => {
   const titleScore = await predict(article.title, model, tfjsMetaData);
   const contentScore = await predict(article.content, model, tfjsMetaData);
 
-  return (titleScore * 3 + contentScore) / 4;
+  return (titleScore * 2 + contentScore) / 3;
 };

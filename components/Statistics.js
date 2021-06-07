@@ -55,9 +55,8 @@ const Statistics = ({ ticker }) => {
   return (
     <Fragment>
       <Center>
-        <Box maxW="500">
+        <Box maxW="900">
           <Table variant="simple">
-            <TableCaption>Imperial to metric conversion factors</TableCaption>
             <Tbody>
               <Tr>
                 <Td>Market Cap</Td>
@@ -66,56 +65,49 @@ const Statistics = ({ ticker }) => {
                 </Td>
               </Tr>
               <Tr>
-                <Td>feet</Td>
-                <Td>centimetres (cm)</Td>
-                <Td isNumeric>30.48</Td>
+                <Td>Cash On Hand</Td>
+                <Td isNumeric>
+                  {statisticsData?.financialData?.totalCash?.fmt ?? "--"}
+                </Td>
               </Tr>
               <Tr>
-                <Td>yards</Td>
-                <Td>metres (m)</Td>
-                <Td isNumeric>0.91444</Td>
+                <Td>Debt</Td>
+                <Td isNumeric>
+                  {statisticsData?.financialData?.totalDebt?.fmt ?? "--"}
+                </Td>
+              </Tr>
+              <Tr>
+                <Td>Profit Margins</Td>
+                <Td isNumeric>
+                  {statisticsData?.defaultKeyStatistics?.profitMargins?.fmt ??
+                    "--"}
+                </Td>
+              </Tr>
+
+              <Tr>
+                <Td>Last Dividend</Td>
+                <Td isNumeric>
+                  {statisticsData?.defaultKeyStatistics?.lastDividendValue
+                    ?.fmt ?? "--"}
+                </Td>
+              </Tr>
+              <Tr>
+                <Td>Short Percentage</Td>
+                <Td isNumeric>
+                  {statisticsData?.defaultKeyStatistics?.shortPercentOfFloat
+                    ?.fmt ?? "--"}
+                </Td>
+              </Tr>
+              <Tr>
+                <Td>Daily Volume</Td>
+                <Td isNumeric>
+                  {statisticsData?.price?.regularMarketVolume?.fmt ?? "--"}
+                </Td>
               </Tr>
             </Tbody>
-            <Tfoot>
-              <Tr>
-                <Th>To convert</Th>
-                <Th>into</Th>
-                <Th isNumeric>multiply by</Th>
-              </Tr>
-            </Tfoot>
           </Table>
         </Box>
       </Center>
-      <Flex wrap="wrap" alignItems="center" justifyContent="space-between">
-        <StatBox
-          statType="Market Cap"
-          statValue={statisticsData?.summaryDetail?.marketCap?.fmt ?? "--"}
-        />
-        <StatBox
-          statType="PE Ratio"
-          statValue={statisticsData?.summaryDetail?.trailingPE?.fmt ?? "--"}
-        />
-        <StatBox
-          statType="PE Ratio"
-          statValue={statisticsData?.summaryDetail?.trailingPE?.fmt ?? "--"}
-        />
-        <StatBox
-          statType="PE Ratio"
-          statValue={statisticsData?.summaryDetail?.trailingPE?.fmt ?? "--"}
-        />
-        <StatBox
-          statType="PE Ratio"
-          statValue={statisticsData?.summaryDetail?.trailingPE?.fmt ?? "--"}
-        />
-        <StatBox
-          statType="PE Ratio"
-          statValue={statisticsData?.summaryDetail?.trailingPE?.fmt ?? "--"}
-        />
-        <StatBox
-          statType="PE Ratio"
-          statValue={statisticsData?.summaryDetail?.trailingPE?.fmt ?? "--"}
-        />
-      </Flex>
     </Fragment>
   );
 };

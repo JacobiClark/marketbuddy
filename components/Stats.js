@@ -44,7 +44,8 @@ const Stats = ({ ticker }) => {
       </Box>
     );
   }
-
+  console.log(parseFloat(summaryData.price.regularMarketPrice.fmt));
+  console.log(summaryData.price.regularMarketPreviousClose.fmt);
   return (
     <Box>
       <StatGroup>
@@ -55,30 +56,32 @@ const Stats = ({ ticker }) => {
             <Box d="flex" alignItems="center">
               <StatArrow
                 type={
-                  summaryData.price.regularMarketPrice.fmt >
-                  summaryData.price.regularMarketPreviousClose.fmt
+                  parseFloat(summaryData.price.regularMarketPrice.fmt) >
+                  parseFloat(summaryData.price.regularMarketPreviousClose.fmt)
                     ? "increase"
                     : "decrease"
                 }
               ></StatArrow>
-              {summaryData.price.regularMarketPrice.fmt >
-              summaryData.price.regularMarketPreviousClose.fmt
+              {parseFloat(summaryData.price.regularMarketPrice.fmt) >
+              parseFloat(summaryData.price.regularMarketPreviousClose.fmt)
                 ? "+"
                 : "-"}
               {Math.abs(
-                summaryData.price.regularMarketPrice.fmt -
-                  summaryData.price.regularMarketPreviousClose.fmt
+                parseFloat(summaryData.price.regularMarketPrice.fmt) -
+                  parseFloat(summaryData.price.regularMarketPreviousClose.fmt)
               ).toFixed(2)}
               {"  ("}
-              {summaryData.price.regularMarketPrice.fmt >
-              summaryData.price.regularMarketPreviousClose.fmt
+              {parseFloat(summaryData.price.regularMarketPrice.fmt) >
+              parseFloat(summaryData.price.regularMarketPreviousClose.fmt)
                 ? "+"
                 : "-"}
               {Math.abs(
                 (100 *
-                  (summaryData.price.regularMarketPrice.fmt -
-                    summaryData.price.regularMarketPreviousClose.fmt)) /
-                  summaryData.price.regularMarketPreviousClose.fmt
+                  (parseFloat(summaryData.price.regularMarketPrice.fmt) -
+                    parseFloat(
+                      summaryData.price.regularMarketPreviousClose.fmt
+                    ))) /
+                  parseFloat(summaryData.price.regularMarketPreviousClose.fmt)
               ).toFixed(2)}
               {"%)"}
             </Box>

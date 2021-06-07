@@ -11,15 +11,15 @@ export const findLineByLeastSquares = (xVals, yVals) => {
     (N * sumXYVals - sumXVals * sumYVals) /
     (N * sumxSquaredVals - sumXVals * sumXVals);
   const yInterceptB = (sumYVals - slopeM * sumXVals) / N;
-  const linearRegressionLine = xVals.map((x) => {
+  const linearrayegressionLine = xVals.map((x) => {
     let dataPoint = {};
     dataPoint.lrValue = slopeM * x + yInterceptB;
     return dataPoint;
   });
-  const squaredErrorFromLine = linearRegressionLine.map(
-    (linearRegressionLineValue, index) =>
-      (yVals[index] - linearRegressionLine[index]) *
-      (yVals[index] - linearRegressionLine[index])
+  const squaredErrorFromLine = linearrayegressionLine.map(
+    (linearrayegressionLineValue, index) =>
+      (yVals[index] - linearrayegressionLine[index]) *
+      (yVals[index] - linearrayegressionLine[index])
   );
   const yValsMean = yVals.reduce((a, b) => a + b, 0) / yVals.length;
   const squaredMeanFromY = yVals.map(
@@ -36,21 +36,21 @@ export const findLineByLeastSquares = (xVals, yVals) => {
   const rSquared =
     1 -
     (totalSquaredErrorFromLine / totalSquaredErrorFromMeansOfyVals).toFixed(5);
-  return { linearRegressionLine, rSquared };
+  return { linearrayegressionLine, rSquared };
 };
 
-export const calculateSMA = (dataArray, window) => {
+export const calculateSMA = (dataarrayay, window) => {
   const SMAvalues = [];
 
   let roundedWindow = Math.floor(window);
   if (roundedWindow % 2 === 0) {
     roundedWindow = roundedWindow - 1;
   }
-  for (let i = 0; i < dataArray.length; i++) {
+  for (let i = 0; i < dataarrayay.length; i++) {
     let dataPoint = {};
     dataPoint.timeIndex = i;
     if (i >= Math.floor(roundedWindow / 2)) {
-      const dataPointsToAverage = dataArray.slice(
+      const dataPointsToAverage = dataarrayay.slice(
         i - Math.floor(roundedWindow / 2),
         1 + i + Math.floor(roundedWindow / 2)
       );
@@ -77,3 +77,6 @@ export const getPercentDifference = (startPrice, currPrice) => {
     ? "+" + percentDifference + "%"
     : percentDifference + "%";
 };
+
+export const average = (array) =>
+  array.reduce((p, c) => p + c, 0) / array.length;

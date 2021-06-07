@@ -90,7 +90,7 @@ export default function Home({ tableData }) {
         <Tbody>
           {tableData.slice(0, 6).map((gainer) => {
             return (
-              <Tr>
+              <Tr key={gainer.symbol}>
                 <Td>
                   <Link
                     color="#4FBCFF"
@@ -129,7 +129,7 @@ export default function Home({ tableData }) {
         <Tbody>
           {tableData.slice(6, 12).map((loser) => {
             return (
-              <Tr>
+              <Tr key={loser.symbol}>
                 <Td>
                   <Link
                     color="#4FBCFF"
@@ -168,7 +168,7 @@ export default function Home({ tableData }) {
         <Tbody>
           {tableData.slice(12, 18).map((active) => {
             return (
-              <Tr>
+              <Tr key={active.symbol}>
                 <Td>
                   <Link
                     color="#4FBCFF"

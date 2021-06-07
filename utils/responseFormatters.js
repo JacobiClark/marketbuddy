@@ -4,9 +4,11 @@ export const formatResponseForRechart = (responseData) => {
       return new Date(timestamp * 1000)
         .toLocaleString("en-US", { timeZone: "America/New_York" })
         .toString()
-        .substr(11, 12);
+        .substr(9, 12);
     }
-    return null;
+    return new Date(timestamp * 1000)
+      .toLocaleString("en-US", { timeZone: "America/New_York" })
+      .toString();
   });
   const rechartData = timestamps
     .map((quote, index) => {

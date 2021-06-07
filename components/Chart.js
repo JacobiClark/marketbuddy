@@ -18,11 +18,11 @@ function Chart({ ticker }) {
   const [chartData, setChartData] = useState(null);
 
   const ranges = [
-    { range: "1d", interval: "1m", long: "1 day" },
+    { range: "1d", interval: "5m", long: "1 day" },
     { range: "5d", interval: "5m", long: "5 days" },
     { range: "1mo", interval: "15m", long: "1 month" },
     { range: "3mo", interval: "60m", long: "3 months" },
-    { range: "6mo", interval: "60m", long: "6 months" },
+    { range: "6mo", interval: "1d", long: "6 months" },
     { range: "1y", interval: "1d", long: "1 year" },
     { range: "2y", interval: "1d", long: "2 years" },
     { range: "5y", interval: "1d", long: "5 years" },
@@ -53,6 +53,7 @@ function Chart({ ticker }) {
       .then((data) => data.json())
       .then((data) => {
         setChartData(formatResponseForRechart(data));
+        console.log(chartData);
       })
       .catch((error) => {
         console.log(error);
@@ -66,6 +67,8 @@ function Chart({ ticker }) {
       </Box>
     );
   }
+  console.log(chartData.rechartData[0].close);
+  console.log(chartData.rechartData[chartData.rechartData.length - 1].close);
 
   return (
     <div>
@@ -92,8 +95,10 @@ function Chart({ ticker }) {
               dataKey="close"
               name="close"
               stroke={
-                chartData.rechartData[0].close <
-                chartData.rechartData[chartData.rechartData.length - 1].close
+                parseFloat(chartData.rechartData[0].close) <
+                parseFloat(
+                  chartData.rechartData[chartData.rechartData.length - 1].close
+                )
                   ? "green"
                   : "red"
               }
@@ -118,6 +123,7 @@ function Chart({ ticker }) {
         {ranges.map((rangeSet) => {
           return (
             <Button
+              key={rangeSet.range}
               size="sm"
               value={rangeSet}
               variant="solid"

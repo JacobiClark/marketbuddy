@@ -1,74 +1,75 @@
-import axios from "axios";
 const tf = require("@tensorflow/tfjs");
-
 const getModel = async () => {
-  const model = await tf.loadLayersModel(
-    `https://storage.googleapis.com/tfjs-models/tfjs/sentiment_cnn_v1/model.json`
-  );
-  return model;
+  try {
+    const model = await tf.loadLayersModel(
+      `https://storage.googleapis.com/tfjs-models/tfjs/sentiment_cnn_v1/model.json`
+    );
+    return model;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-const getGoogletfjsMetaData = async () => {
+const getTfjsMetaData = async () => {
   try {
-    const response = await axios({
-      method: "GET",
-      url:
-        "https://storage.googleapis.com/tfjs-models/tfjs/sentiment_cnn_v1/metadata.json",
-    });
-    return response.data;
-  } catch (err) {
-    console.log(err);
+    const tfjsMetaData = await fetch(
+      "https://storage.googleapis.com/tfjs-models/tfjs/sentiment_cnn_v1/metadata.json"
+    );
+    return tfjsMetaData.json();
+  } catch (error) {
+    console.log(error);
   }
 };
 
 const padSequences = (sequences) => {
-  return sequences.map((seq) => {
-    if (seq.length > 100) {
-      seq.splice(0, seq.length - 100);
+  return sequences.map((sequence) => {
+    if (sequence.length > 100) {
+      sequence.splice(0, sequence.length - 100);
     }
-    if (seq.length < 100) {
+    if (sequence.length < 100) {
       const pad = [];
-      for (let i = 0; i < 100 - seq.length; ++i) {
+      for (let i = 0; i < 100 - sequence.length; ++i) {
         pad.push(0);
       }
-      seq = pad.concat(seq);
+      sequence = pad.concat(sequence);
     }
-    return seq;
+    return sequence;
   });
 };
 
-padSequences(["a", "b", "c d"]);
-
-const predict = async (text, model, metadata) => {
-  if (text === null) {
-    return 0;
-  }
-  const trimmed = text
-    .trim()
+const getSentimentScore = async (text, model, metaData) => {
+  const inputText = text
     .toLowerCase()
+    .trim()
     .replace(/(\.|\,|\!)/g, "")
     .split(" ");
-  const sequence = trimmed.map((word) => {
-    const wordIndex = metadata.word_index[word];
-    if (typeof wordIndex === "undefined") {
-      return 2; //oov_index
+  const sequence = inputText.map((word) => {
+    const wordIndex = metaData.word_index[word];
+    if (wordIndex == "undefined") {
+      return null;
     }
-    return wordIndex + metadata.index_from;
+    return wordIndex + metaData.index_from;
   });
-  const paddedSequence = padSequences([sequence], metadata);
-  const input = tf.tensor2d(paddedSequence, [1, metadata.max_len]);
-
-  const predictOut = model.predict(input);
-  const score = predictOut.dataSync()[0];
-  predictOut.dispose();
-  return score;
+  const paddedSequence = padSequences([sequence], metaData);
+  const inputTensor = tf.tensor2d(paddedSequence, [1, metaData.max_len]);
+  const modelPrediction = model.predict(inputTensor);
+  const sentimentScore = modelPrediction.dataSync()[0];
+  modelPrediction.dispose();
+  return sentimentScore;
 };
 
 export const analyzeSentiment = async (article) => {
   const model = await getModel();
-  const tfjsMetaData = await getGoogletfjsMetaData();
-  const titleScore = await predict(article.title, model, tfjsMetaData);
-  const contentScore = await predict(article.content, model, tfjsMetaData);
-
+  const tfjsMetaData = await getTfjsMetaData();
+  const titleScore = await getSentimentScore(
+    article.title,
+    model,
+    tfjsMetaData
+  );
+  const contentScore = await getSentimentScore(
+    article.content,
+    model,
+    tfjsMetaData
+  );
   return (titleScore * 2 + contentScore) / 3;
 };

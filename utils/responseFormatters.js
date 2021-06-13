@@ -4,7 +4,7 @@ export const formatResponseForRechart = (responseData) => {
       return new Date(timestamp * 1000)
         .toLocaleString("en-US", { timeZone: "America/New_York" })
         .toString()
-        .substr(9, 12);
+        .substr(10, 12);
     }
     return new Date(timestamp * 1000)
       .toLocaleString("en-US", { timeZone: "America/New_York" })

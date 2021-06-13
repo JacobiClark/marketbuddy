@@ -70,6 +70,7 @@ const TextSentiment = ({ ticker }) => {
   if (isLoading) {
     return (
       <Box align="center">
+        <Text>Performing Sentiment Analysis...</Text>
         <Spinner />
       </Box>
     );

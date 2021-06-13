@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders correctly without items 1`] = `
+Array [
+  <style
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": ".css-17jybg2{padding:4px;}.css-17jybg2 width{base:50%;md:25%;xl:20%;}",
+      }
+    }
+    data-emotion="css 17jybg2"
+  />,
+  <div
+    className="css-17jybg2"
+  >
+    <style
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": ".css-in3yi3{font-weight:bold;}",
+        }
+      }
+      data-emotion="css in3yi3"
+    />
+    <p
+      className="chakra-text css-in3yi3"
+    />
+    <p
+      className="chakra-text css-0"
+    />
+  </div>,
+]
+`;

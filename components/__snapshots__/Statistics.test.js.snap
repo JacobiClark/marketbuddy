@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders correctly without items 1`] = `
+<div
+  align="center"
+  className="css-0"
+>
+  <style
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": ".css-1y7joxr{display:inline-block;border-color:currentColor;border-style:solid;border-radius:99999px;border-width:2px;border-bottom-color:transparent;border-left-color:transparent;-webkit-animation:animation-b7n1on 0.45s linear infinite;animation:animation-b7n1on 0.45s linear infinite;}@-webkit-keyframes animation-b7n1on{0%{-webkit-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);transform:rotate(0deg);}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);transform:rotate(360deg);}}@keyframes animation-b7n1on{0%{-webkit-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);transform:rotate(0deg);}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);transform:rotate(360deg);}}",
+      }
+    }
+    data-emotion="css 1y7joxr animation-b7n1on"
+  />
+  <div
+    className="chakra-spinner css-1y7joxr"
+  >
+    <style
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": ".css-f8n5zr{border:0px;clip:rect(0px, 0px, 0px, 0px);height:1px;width:1px;margin:-1px;padding:0px;overflow:hidden;white-space:nowrap;position:absolute;}",
+        }
+      }
+      data-emotion="css f8n5zr"
+    />
+    <span
+      className="css-f8n5zr"
+    >
+      Loading...
+    </span>
+  </div>
+</div>
+`;

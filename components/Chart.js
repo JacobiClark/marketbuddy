@@ -13,6 +13,7 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
+const fetch = require("node-fetch");
 
 function Chart({ ticker }) {
   const [chartData, setChartData] = useState(null);

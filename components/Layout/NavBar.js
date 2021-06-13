@@ -1,6 +1,6 @@
 import React from "react";
 import SearchBar from "../SearchBar";
-import { Flex, Center, Box, Grid, GridItem } from "@chakra-ui/react";
+import { Flex, Center, Box } from "@chakra-ui/react";
 import Link from "next/link";
 
 const NavBar = () => {

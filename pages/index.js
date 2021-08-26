@@ -70,51 +70,12 @@ export async function getServerSideProps(context) {
 
 export default function Home({ tableData }) {
   return (
-    <Wrap spacing="30px" justify="center" alignContent="center">
+    <Wrap spacing="30px" justify="space-between" alignContent="center">
       <Table
         variant="simple"
         width={[
           "100%", // base
-          "40%", // 480px upwards
-        ]}
-      >
-        <TableCaption placement="top">Most Active</TableCaption>
-        <Thead>
-          <Tr>
-            <Th>Symbol</Th>
-            <Th>Previous Close</Th>
-            <Th>Current Price</Th>
-            <Th>Change</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {tableData.slice(12, 18).map((active) => {
-            return (
-              <Tr key={active.symbol}>
-                <Td>
-                  <Link
-                    color="#4FBCFF"
-                    key={active.symbol}
-                    href={"/analysis/" + active.symbol}
-                  >
-                    {active.symbol}
-                  </Link>
-                </Td>
-                <Td>{active.previousClose}</Td>
-                <Td>{active.price}</Td>
-                <Td>
-                  {getPercentDifference(active.previousClose, active.price)}
-                </Td>
-              </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
-      <Table
-        variant="simple"
-        width={[
-          "100%", // base
-          "40%", // 480px upwards
+          "46%", // 480px upwards
         ]}
       >
         <TableCaption placement="top">Top Daily Gainers</TableCaption>
@@ -153,7 +114,7 @@ export default function Home({ tableData }) {
         variant="simple"
         width={[
           "100%", // base
-          "40%", // 480px upwards
+          "46%", // 480px upwards
         ]}
       >
         <TableCaption placement="top">Top Daily Losers</TableCaption>
@@ -182,6 +143,45 @@ export default function Home({ tableData }) {
                 <Td>{loser.price}</Td>
                 <Td>
                   {getPercentDifference(loser.previousClose, loser.price)}
+                </Td>
+              </Tr>
+            );
+          })}
+        </Tbody>
+      </Table>
+      <Table
+        variant="simple"
+        width={[
+          "100%", // base
+          "46%", // 480px upwards
+        ]}
+      >
+        <TableCaption placement="top">Most Active</TableCaption>
+        <Thead>
+          <Tr>
+            <Th>Symbol</Th>
+            <Th>Previous Close</Th>
+            <Th>Current Price</Th>
+            <Th>Change</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {tableData.slice(12, 18).map((active) => {
+            return (
+              <Tr key={active.symbol}>
+                <Td>
+                  <Link
+                    color="#4FBCFF"
+                    key={active.symbol}
+                    href={"/analysis/" + active.symbol}
+                  >
+                    {active.symbol}
+                  </Link>
+                </Td>
+                <Td>{active.previousClose}</Td>
+                <Td>{active.price}</Td>
+                <Td>
+                  {getPercentDifference(active.previousClose, active.price)}
                 </Td>
               </Tr>
             );

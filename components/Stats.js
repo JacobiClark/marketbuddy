@@ -44,8 +44,7 @@ const Stats = ({ ticker }) => {
       </Box>
     );
   }
-  console.log(parseFloat(summaryData.price.regularMarketPrice.fmt));
-  console.log(summaryData.price.regularMarketPreviousClose.fmt);
+
   return (
     <Box>
       <StatGroup>
@@ -83,7 +82,7 @@ const Stats = ({ ticker }) => {
                     ))) /
                   parseFloat(summaryData.price.regularMarketPreviousClose.fmt)
               ).toFixed(2)}
-              {"%)"}
+              {"%) Today"}
             </Box>
           </StatHelpText>
         </Stat>

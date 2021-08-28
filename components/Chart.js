@@ -3,13 +3,10 @@ import { Button, Container, Stack, Box, Spinner } from "@chakra-ui/react";
 import { formatResponseForRechart } from "../utils/responseFormatters";
 import {
   LineChart,
-  Area,
   Line,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
@@ -20,7 +17,7 @@ function Chart({ ticker }) {
 
   const ranges = [
     { range: "1d", interval: "5m", long: "1 day" },
-    { range: "5d", interval: "5m", long: "5 days" },
+    { range: "5d", interval: "15m", long: "5 days" },
     { range: "1mo", interval: "15m", long: "1 month" },
     { range: "3mo", interval: "60m", long: "3 months" },
     { range: "6mo", interval: "1d", long: "6 months" },
@@ -54,7 +51,6 @@ function Chart({ ticker }) {
       .then((data) => data.json())
       .then((data) => {
         setChartData(formatResponseForRechart(data));
-        console.log(chartData);
       })
       .catch((error) => {
         console.log(error);
@@ -68,8 +64,6 @@ function Chart({ ticker }) {
       </Box>
     );
   }
-  console.log(chartData.rechartData[0].close);
-  console.log(chartData.rechartData[chartData.rechartData.length - 1].close);
 
   return (
     <div>

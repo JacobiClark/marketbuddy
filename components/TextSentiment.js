@@ -61,7 +61,6 @@ const TextSentiment = ({ ticker }) => {
       );
       setNewsData(filteredNewsData);
       setNewsSentiment(newsDataSentimentScores);
-      console.log(newsDataSentimentScores);
       setIsloading(false);
     }
     fetchNewsData();

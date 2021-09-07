@@ -9,6 +9,7 @@ import {
   Box,
   Text,
   Table,
+  Flex,
   Thead,
   Tbody,
   Tfoot,
@@ -70,10 +71,15 @@ export async function getServerSideProps(context) {
 
 export default function Home({ tableData }) {
   return (
-    <Wrap spacing="30px" justify="space-between" alignContent="center">
+    <Flex
+      direction="row"
+      wrap="wrap"
+      justifyContent={["space-around"]}
+      alignItems="flex-start"
+    >
       <Table
         variant="simple"
-        width={[
+        w={[
           "100%", // base
           "46%", // 480px upwards
         ]}
@@ -112,7 +118,7 @@ export default function Home({ tableData }) {
       </Table>
       <Table
         variant="simple"
-        width={[
+        w={[
           "100%", // base
           "46%", // 480px upwards
         ]}
@@ -151,7 +157,7 @@ export default function Home({ tableData }) {
       </Table>
       <Table
         variant="simple"
-        width={[
+        w={[
           "100%", // base
           "46%", // 480px upwards
         ]}
@@ -188,6 +194,6 @@ export default function Home({ tableData }) {
           })}
         </Tbody>
       </Table>
-    </Wrap>
+    </Flex>
   );
 }

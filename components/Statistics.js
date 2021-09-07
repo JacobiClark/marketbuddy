@@ -34,7 +34,6 @@ const Statistics = ({ ticker }) => {
           }
         );
         const statistics = await res.json();
-        console.log(statistics);
         setStatisticsData(statistics);
         setIsLoading(false);
       } catch (error) {

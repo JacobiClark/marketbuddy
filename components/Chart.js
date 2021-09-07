@@ -32,6 +32,7 @@ function Chart({ ticker }) {
   });
 
   useEffect(() => {
+    console.log(chartData);
     fetch(
       "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-chart?interval=" +
         timeRange.interval +
@@ -51,6 +52,8 @@ function Chart({ ticker }) {
       .then((data) => data.json())
       .then((data) => {
         setChartData(formatResponseForRechart(data));
+        console.log(data);
+        console.log(chartData);
       })
       .catch((error) => {
         console.log(error);
@@ -97,6 +100,7 @@ function Chart({ ticker }) {
                   ? "green"
                   : "red"
               }
+              strokeWidth={2}
               dot={false}
             />
             <Tooltip

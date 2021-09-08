@@ -74,13 +74,24 @@ const TextSentiment = ({ ticker }) => {
       </Box>
     );
   }
-
+  if (newsData.length < 1) {
+    return (
+      <Center h="50px">
+        Unable to fetch recent {ticker} articles for sentiment analysis. Please
+        try another stock.
+      </Center>
+    );
+  }
   return (
     <Box>
       <Center>
         <HStack>
           <Text fontWeight="bold">Average Sentiment Score: </Text>
-          <Text fontWeight="bold" color={getScoreColor(average(newsSentiment))}>
+          <Text
+            fontWeight="bold"
+            fontSize="xl"
+            color={getScoreColor(average(newsSentiment))}
+          >
             {average(newsSentiment).toFixed(5)}
           </Text>
         </HStack>

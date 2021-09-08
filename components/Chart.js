@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Button, Container, Stack, Box, Spinner } from "@chakra-ui/react";
+import {
+  Button,
+  Container,
+  Stack,
+  Box,
+  Spinner,
+  Center,
+} from "@chakra-ui/react";
 import { formatResponseForRechart } from "../utils/responseFormatters";
 import {
   LineChart,
@@ -65,6 +72,17 @@ function Chart({ ticker }) {
       <Box align="center">
         <Spinner />
       </Box>
+    );
+  }
+
+  console.log(chartData);
+
+  if (chartData.rechartData.length < 10) {
+    return (
+      <Center h="50px">
+        Unable to fetch {ticker} chart data from the API. Please try another
+        stock.
+      </Center>
     );
   }
 

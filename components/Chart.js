@@ -59,8 +59,6 @@ function Chart({ ticker }) {
       .then((data) => data.json())
       .then((data) => {
         setChartData(formatResponseForRechart(data));
-        console.log(data);
-        console.log(chartData);
       })
       .catch((error) => {
         console.log(error);
@@ -75,9 +73,7 @@ function Chart({ ticker }) {
     );
   }
 
-  console.log(chartData);
-
-  if (chartData.rechartData.length < 10) {
+  if (chartData.rechartData.length < 2) {
     return (
       <Center h="50px">
         Unable to fetch {ticker} chart data from the API. Please try another

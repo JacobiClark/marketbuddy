@@ -6,9 +6,8 @@ import { Container } from "@chakra-ui/react";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <NavBar />
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <Container maxW="contaienr.xl" p="1%">
         <Component {...pageProps} />
       </Container>

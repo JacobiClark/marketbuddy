@@ -1,4 +1,4 @@
-## WGU Capstone Project
+## MarketBuddy
 
 This repository contains the source code for my Capstone Submittal.
 

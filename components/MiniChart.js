@@ -18,12 +18,11 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
-
 const fetch = require("node-fetch");
 
 function MiniChart(props) {
   const [chartData, setChartData] = useState(null);
-
+  const height = "170";
   const ranges = [
     { range: "1d", interval: "5m", long: "1 day" },
     { range: "5d", interval: "15m", long: "5 days" },
@@ -70,7 +69,7 @@ function MiniChart(props) {
 
   if (!chartData) {
     return (
-      <Box align="center">
+      <Box align="center" h={130}>
         <Spinner />
       </Box>
     );
@@ -97,7 +96,7 @@ function MiniChart(props) {
             {props.stockName}
           </Link>
         </Center>
-        <ResponsiveContainer width="100%" height={130} p>
+        <ResponsiveContainer width="100%" height={130}>
           <LineChart
             data={chartData.rechartData}
             axisLine={false}
@@ -105,7 +104,7 @@ function MiniChart(props) {
           >
             <XAxis dataKey="timestamp" tick={false}></XAxis>
             <YAxis
-              width={45}
+              width={47}
               domain={[chartData.chartLow, chartData.chartHigh]}
               dx={-5}
             />

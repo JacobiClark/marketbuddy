@@ -69,7 +69,7 @@ function MiniChart(props) {
 
   if (!chartData) {
     return (
-      <Box align="center" h={130}>
+      <Box align="center" h={120}>
         <Spinner />
       </Box>
     );
@@ -96,7 +96,7 @@ function MiniChart(props) {
             {props.stockName}
           </Link>
         </Center>
-        <ResponsiveContainer width="100%" height={130}>
+        <ResponsiveContainer width="100%" height={120}>
           <LineChart
             data={chartData.rechartData}
             axisLine={false}

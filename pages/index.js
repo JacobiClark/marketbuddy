@@ -78,7 +78,7 @@ export default function Home({ tableData }) {
       justifyContent={["space-around"]}
       align="flex-start"
     >
-      <Box w="46%" display={["none", "none", "block"]}>
+      <Box w="46%" display={["none", "none", "block"]} mt="7">
         <MiniChart ticker="SPY" stockName="S&P 500"></MiniChart>
         <MiniChart ticker="%5EDJI" stockName="Dow Jones"></MiniChart>
         <MiniChart ticker="NQ=F" stockName="Nasdaq"></MiniChart>

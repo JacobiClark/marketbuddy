@@ -18,6 +18,7 @@ import {
   Td,
   TableCaption,
 } from "@chakra-ui/react";
+import MiniChart from "../components/MiniChart";
 
 export async function getServerSideProps(context) {
   const movers = await fetch(
@@ -75,8 +76,13 @@ export default function Home({ tableData }) {
       direction="row"
       wrap="wrap"
       justifyContent={["space-around"]}
-      alignItems="flex-start"
+      align="flex-start"
     >
+      <Box w="46%" display={["none", "none", "block"]}>
+        <MiniChart ticker="SPY" stockName="S&P 500"></MiniChart>
+        <MiniChart ticker="%5EDJI" stockName="Dow Jones"></MiniChart>
+        <MiniChart ticker="NQ=F" stockName="Nasdaq"></MiniChart>
+      </Box>
       <Table
         variant="simple"
         w={[

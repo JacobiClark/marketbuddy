@@ -7,8 +7,8 @@ import { Container } from "@chakra-ui/react";
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
-      <NavBar />
-      <Container maxW="contaienr.xl" p="1%">
+      <Container maxW="container.lg">
+        <NavBar />
         <Component {...pageProps} />
       </Container>
     </ChakraProvider>

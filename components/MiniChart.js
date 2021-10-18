@@ -5,6 +5,7 @@ import {
   Stack,
   Box,
   Spinner,
+  Link,
   Center,
 } from "@chakra-ui/react";
 import { formatResponseForRechart } from "../utils/responseFormatters";
@@ -17,9 +18,10 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
+
 const fetch = require("node-fetch");
 
-function Chart({ ticker }) {
+function MiniChart(props) {
   const [chartData, setChartData] = useState(null);
 
   const ranges = [
@@ -44,7 +46,7 @@ function Chart({ ticker }) {
       "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-chart?interval=" +
         timeRange.interval +
         "&symbol=" +
-        ticker +
+        props.ticker +
         "&range=" +
         timeRange.range +
         "&region=US",
@@ -58,6 +60,7 @@ function Chart({ ticker }) {
     )
       .then((data) => data.json())
       .then((data) => {
+        console.log(formatResponseForRechart(data));
         setChartData(formatResponseForRechart(data));
       })
       .catch((error) => {
@@ -76,16 +79,25 @@ function Chart({ ticker }) {
   if (chartData.rechartData.length < 2) {
     return (
       <Center h="50px">
-        Unable to fetch {ticker} chart data from the API. Please try another
-        stock.
+        Unable to fetch {props.ticker} chart data from the API. Please try
+        another stock.
       </Center>
     );
   }
 
   return (
     <div>
-      <Box mt="3" mb="1">
-        <ResponsiveContainer width="95%" height={400}>
+      <Box>
+        <Center>
+          <Link
+            color="#4FBCFF"
+            key={props.ticker}
+            href={"/analysis/" + props.ticker}
+          >
+            {props.stockName}
+          </Link>
+        </Center>
+        <ResponsiveContainer width="100%" height={130} p>
           <LineChart
             data={chartData.rechartData}
             axisLine={false}
@@ -125,30 +137,8 @@ function Chart({ ticker }) {
           </LineChart>
         </ResponsiveContainer>
       </Box>
-      <Stack
-        direction="row"
-        spacing={3}
-        align="center"
-        justify="center"
-        mt="1"
-        mb="3"
-      >
-        {ranges.map((rangeSet) => {
-          return (
-            <Button
-              key={rangeSet.range}
-              size="sm"
-              value={rangeSet}
-              variant="solid"
-              onClick={() => setTimeRange(rangeSet)}
-            >
-              {rangeSet.range}
-            </Button>
-          );
-        })}
-      </Stack>
     </div>
   );
 }
 
-export default Chart;
+export default MiniChart;

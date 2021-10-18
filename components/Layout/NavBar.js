@@ -27,7 +27,7 @@ const NavBar = () => {
           </Flex>
         </a>
       </Link>
-      <Box p="2" flex="1" maxW="500px" position="relative" ml="115">
+      <Box p="2" flex="1" maxW="500px" position="relative" ml="125">
         <SearchBar />
       </Box>
     </Flex>

@@ -39,7 +39,6 @@ function Chart({ ticker }) {
   });
 
   useEffect(() => {
-    console.log(chartData);
     fetch(
       "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-chart?interval=" +
         timeRange.interval +

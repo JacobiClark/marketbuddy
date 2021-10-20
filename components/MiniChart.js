@@ -59,6 +59,7 @@ function MiniChart(props) {
     )
       .then((data) => data.json())
       .then((data) => {
+        console.log(data);
         console.log(formatResponseForRechart(data));
         setChartData(formatResponseForRechart(data));
       })

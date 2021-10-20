@@ -86,11 +86,50 @@ export default function Home({ tableData }) {
         </Box>
         <Box w={["100%", "100%", "46%"]}>
           <Table variant="simple" size={["sm", "md"]}>
-            <TableCaption placement="top">Top Daily Gainers</TableCaption>
+            <TableCaption placement="top" mb="1">
+              Most Active
+            </TableCaption>
+            <Thead>
+              <Tr>
+                <Th mr="3px">Symbol</Th>
+                <Th>Prev. Close</Th>
+                <Th>Current Price</Th>
+                <Th>Change</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {tableData.slice(12, 18).map((active) => {
+                return (
+                  <Tr key={active.symbol}>
+                    <Td>
+                      <Link
+                        color="#4FBCFF"
+                        key={active.symbol}
+                        href={"/analysis/" + active.symbol}
+                      >
+                        {active.symbol}
+                      </Link>
+                    </Td>
+                    <Td>{active.previousClose}</Td>
+                    <Td>{active.price}</Td>
+                    <Td>
+                      {getPercentDifference(active.previousClose, active.price)}
+                    </Td>
+                  </Tr>
+                );
+              })}
+            </Tbody>
+          </Table>
+        </Box>
+        <Box w={["100%", "100%", "46%"]}>
+          <Table variant="simple" size={["sm", "md"]}>
+            <TableCaption placement="top" mb="1">
+              Top Daily Gainers
+            </TableCaption>
             <Thead>
               <Tr>
                 <Th>Symbol</Th>
-                <Th>Previous Close</Th>
+                <Th>Prev. Close</Th>
                 <Th>Current Price</Th>
                 <Th>Change</Th>
               </Tr>
@@ -121,11 +160,13 @@ export default function Home({ tableData }) {
         </Box>
         <Box w={["100%", "100%", "46%"]}>
           <Table variant="simple" size={["sm", "md"]}>
-            <TableCaption placement="top">Top Daily Losers</TableCaption>
+            <TableCaption placement="top" mb="1">
+              Top Daily Losers
+            </TableCaption>
             <Thead>
               <Tr>
                 <Th>Symbol</Th>
-                <Th>Previous Close</Th>
+                <Th>Prev. Close</Th>
                 <Th>Current Price</Th>
                 <Th>Change</Th>
               </Tr>
@@ -147,41 +188,6 @@ export default function Home({ tableData }) {
                     <Td>{loser.price}</Td>
                     <Td>
                       {getPercentDifference(loser.previousClose, loser.price)}
-                    </Td>
-                  </Tr>
-                );
-              })}
-            </Tbody>
-          </Table>
-        </Box>
-        <Box w={["100%", "100%", "46%"]}>
-          <Table variant="simple" size={["sm", "md"]}>
-            <TableCaption placement="top">Most Active</TableCaption>
-            <Thead>
-              <Tr>
-                <Th>Symbol</Th>
-                <Th>Previous Close</Th>
-                <Th>Current Price</Th>
-                <Th>Change</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {tableData.slice(12, 18).map((active) => {
-                return (
-                  <Tr key={active.symbol}>
-                    <Td>
-                      <Link
-                        color="#4FBCFF"
-                        key={active.symbol}
-                        href={"/analysis/" + active.symbol}
-                      >
-                        {active.symbol}
-                      </Link>
-                    </Td>
-                    <Td>{active.previousClose}</Td>
-                    <Td>{active.price}</Td>
-                    <Td>
-                      {getPercentDifference(active.previousClose, active.price)}
                     </Td>
                   </Tr>
                 );

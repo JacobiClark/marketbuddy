@@ -92,8 +92,8 @@ export default function Home({ tableData }) {
             <Thead>
               <Tr>
                 <Th mr="3px">Symbol</Th>
-                <Th>Prev. Close</Th>
-                <Th>Current Price</Th>
+                <Th>Prev.</Th>
+                <Th>Price</Th>
                 <Th>Change</Th>
               </Tr>
             </Thead>
@@ -129,8 +129,8 @@ export default function Home({ tableData }) {
             <Thead>
               <Tr>
                 <Th>Symbol</Th>
-                <Th>Prev. Close</Th>
-                <Th>Current Price</Th>
+                <Th>Prev.</Th>
+                <Th>Price</Th>
                 <Th>Change</Th>
               </Tr>
             </Thead>
@@ -166,8 +166,8 @@ export default function Home({ tableData }) {
             <Thead>
               <Tr>
                 <Th>Symbol</Th>
-                <Th>Prev. Close</Th>
-                <Th>Current Price</Th>
+                <Th>Prev.</Th>
+                <Th>Price</Th>
                 <Th>Change</Th>
               </Tr>
             </Thead>
